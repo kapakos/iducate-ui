@@ -5,14 +5,8 @@
  */
 import React, { Component } from 'react';
 import style from 'next/css';
-import { layout } from '../../styles';
-
-const styles = {
-  navigation: {
-    background: '#002a8b',
-    height: '60px',
-  },
-};
+import { contentWrapper } from '../../styles/contentWrapper';
+import { navigation } from './styles';
 
 export default class Navigation extends Component {
   constructor(props) {
@@ -21,8 +15,8 @@ export default class Navigation extends Component {
 
   render() {
     return (
-      <div className={style(styles.navigation)}>
-        <div className={style(layout.contentWrapper)}>
+      <div {...navigation}>
+        <div {...contentWrapper}>
           {/* add menu here */}
           {this.props.children}
         </div>

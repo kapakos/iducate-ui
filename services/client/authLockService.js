@@ -4,12 +4,19 @@
  * @author pkapako
  */
 import uuid from 'uuid';
-import { setSecret } from './auth';
+import { setSecret } from '../authService';
 
 const getLock = (options) => {
-  const config = require('../config.json');
+  const config = require('../../config.json');
   const Auth0Lock = require('auth0-lock').default;
-  return new Auth0Lock(config.AUTH0_CLIENT_ID, config.AUTH0_CLIENT_DOMAIN, options);
+  return new Promise((resolve, reject) => {
+    try {
+      var lock = new Auth0Lock(config.AUTH0_CLIENT_ID, config.AUTH0_CLIENT_DOMAIN, options);
+      resolve(lock);
+    } catch (error){
+      reject(error);
+    }
+  });
 };
 
 const getBaseUrl = () => `${window.location.protocol}//${window.location.host}`;
@@ -46,10 +53,15 @@ const getOptions = (container) => {
       logo: 'http://www.werkstattmedien.com/wp-content/uploads/werkstatt_logo.png',
       primaryColor: '#002a8b',
     },
+    languageDictionary: {
+      emailInputPlaceholder: 'your@email.com',
+      title: '',
+    },
   };
 };
 
-export const show = container => getLock(getOptions(container)).show();
-export const logout = () => {
+export const showLoginPanel = container => getLock(getOptions(container))
+  .then(lock => lock.show());
+export const authLogout = () => {
   window.location.href = getLogoutUrl();
 };

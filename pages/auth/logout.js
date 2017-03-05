@@ -4,13 +4,15 @@
  * @author pkapako
  */
 import React from 'react';
-import { unsetToken } from '../../utils/auth';
-import { logout } from '../../utils/lock';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../../store';
+import { authLogout } from '../../services/client/authLockService';
+import { logout } from '../../reducer/modules/auth';
 
-class logOut extends React.Component {
-  componentDidMount() {
-    unsetToken();
-    logout();
+class Logout extends React.Component {
+  async componentDidMount() {
+    await this.props.dispatch(logout());
+    authLogout();
   }
 
   render() {
@@ -18,4 +20,4 @@ class logOut extends React.Component {
   }
 }
 
-export default logOut;
+export default withRedux(initStore)(Logout);

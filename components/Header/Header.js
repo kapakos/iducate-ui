@@ -7,12 +7,7 @@ import React from 'react';
 import Head from 'next/head';
 import Navigation from '../Navigation';
 import Menu from '../Menu';
-import { reset } from '../../styles';
-
-const body =
-  `body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }`;
+import { Reset, Global } from '../../styles';
 
 const menuItems =
   [{
@@ -41,9 +36,9 @@ const Header = ({ isAuthenticated }) => (
       <meta property="og:title" content="Iducate" />
       <meta property="og:description" content="Take your education in your hands" />
       <meta property="og:locale" content="en-US" />
-      <style>{reset}</style>
-      <style>{body}</style>
     </Head>
+    <Reset />
+    <Global />
     <header>
       <Navigation>
         <Menu isAuthenticated={isAuthenticated} items={menuItems} />

@@ -3,29 +3,24 @@
  *
  * @author pkapako
  */
-export const LOADING_COURSES = '@@iducate/courses/LOADING_COURSES';
-export const LOADING_COURSES_SUCCESS = '@@iducate/courses/LOADING_COURSES_SUCCESS';
-export const LOADING_COURSES_FAILED = '@@iducate/courses/LOADING_COURSES_FAILED';
+import { getUdacityCourses } from '../../services/server/coursesService';
 
-export const ADDING_COURSE = '@@iducate/courses/ADDING_COURSE';
-export const COURSE_ADDED = '@@iducate/courses/COURSE_ADDED';
-export const ADDING_COURSE_FAILED = '@@iducate/courses/ADDING_COURSE_FAILED';
-
-export const DELETING_COURSE = '@@iducate/courses/DELETING_COURSE';
-export const COURSE_DELETED = '@@iducate/courses/COURSE_DELETED';
-export const DELETING_COURSE_FAILED = '@@iducate/courses/DELETING_COURSE_FAILED';
+const LOADING_COURSES = '@@iducate/courses/LOADING_COURSES';
+const LOADING_COURSES_SUCCESS = '@@iducate/courses/LOADING_COURSES_SUCCESS';
+const LOADING_COURSES_FAILED = '@@iducate/courses/LOADING_COURSES_FAILED';
 
 const initialState = {
   loaded: false,
+  loading: false,
 };
 
-const courses = (state = initialState, action = {}) => {
+export default (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_COURSES:
       return {
         ...state,
         loading: true,
-        loading_error: undefined,
+        loading_error: null,
       };
     case LOADING_COURSES_SUCCESS:
       return {
@@ -33,7 +28,7 @@ const courses = (state = initialState, action = {}) => {
         loading: false,
         loaded: true,
         stale: false,
-        courses: action.result,
+        data: action.payload,
       };
     case LOADING_COURSES_FAILED:
       return {
@@ -41,44 +36,33 @@ const courses = (state = initialState, action = {}) => {
         loading: false,
         loading_error: action.error,
       };
-    case ADDING_COURSE:
-      return {
-        ...state,
-        adding: true,
-      };
-    case COURSE_ADDED:
-      return {
-        ...state,
-        adding: false,
-        stale: true,
-      };
-    case ADDING_COURSE_FAILED:
-      return {
-        ...state,
-        adding: false,
-        adding_error: action.error,
-      };
-    case DELETING_COURSE:
-      return {
-        ...state,
-        deleting: true,
-      };
-    case COURSE_DELETED:
-      return {
-        ...state,
-        deleting: false,
-        stale: true,
-      };
-    case DELETING_COURSE_FAILED:
-      return {
-        ...state,
-        deleting: false,
-        deleting_error: action.error,
-      };
     default:
       return state;
 
   }
 };
 
-export default courses;
+function loadCourses() {
+  return { type: LOADING_COURSES };
+}
+
+function coursesLoaded(courses) {
+  return { type: LOADING_COURSES_SUCCESS, payload: courses };
+}
+
+function coursesFailed(error) {
+  return { type: LOADING_COURSES_FAILED, error };
+}
+
+export function loadUdacityCourses() {
+  return (dispatch) => {
+    dispatch(loadCourses());
+    return getUdacityCourses()
+      .then((response) => {
+        dispatch(coursesLoaded(response));
+      })
+      .catch(error => {
+        dispatch(coursesFailed(error));
+      });
+  };
+}

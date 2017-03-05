@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import R from 'ramda';
+import Course from '../Course';
 
 const CourseList = ({ addCourse, deleteCourse, courses }) => (
   <div className="courseList">
@@ -23,22 +24,7 @@ const CourseList = ({ addCourse, deleteCourse, courses }) => (
           </tr>
         </thead>
         <tbody>
-          {courses.map(course => (
-            <tr key={course.Id}>
-              <td>{course.Name}</td>
-              <td>{course.Institute}</td>
-              <td>{course.Completed ? 'yes' : 'no'}</td>
-              <td>{course.Score}</td>
-              <td>{course.GraduationDate.toString()}</td>
-              <td>
-                <input
-                  type="button"
-                  onClick={() => deleteCourse(course.Id)}
-                  value="delete course"
-                />
-              </td>
-            </tr>
-          ))}
+          {R.map(course => (<Course course={course} deleteCourse={deleteCourse} />), courses)}
         </tbody>
       </table>
     </div>
@@ -54,7 +40,7 @@ CourseList.defaultProps = {
 CourseList.propTypes = {
   addCourse: React.PropTypes.func,
   deleteCourse: React.PropTypes.func,
-  courses:  React.PropTypes.arrayOf(
+  courses: React.PropTypes.arrayOf(
     React.PropTypes.shape({
       Id: React.PropTypes.string.isRequired,
       Name: React.PropTypes.string.isRequired,

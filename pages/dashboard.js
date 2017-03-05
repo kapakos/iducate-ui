@@ -4,35 +4,30 @@
  * @author pkapako
  */
 import React from 'react';
-import courses from '../data/courses';
-import CourseList from '../components/CourseList';
-import securePage from '../hocs/securePage';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../store';
+import Layout from '../components/Layout';
+import securePageService from '../services/server/securePageService';
+import { checkAuthentication } from '../reducer/modules/auth';
 
 class Dashboard extends React.Component {
-  static getInitialProps() {
-    return { courses };
+  static async getInitialProps(ctx) {
+    await ctx.store.dispatch(checkAuthentication(ctx.req));
+    const state = ctx.store.getState();
+    const loggedUser = state.auth.user;
+    await securePageService(ctx.res, loggedUser);
+    return {
+      user: loggedUser,
+      isAuthenticated: !!loggedUser,
+    };
   }
 
-  renderCourses = () => <CourseList courses={courses} />;
-
-  render = () => <div>{this.renderCourses(courses)}{console.log('Dashboard')}</div>;
+  render() {
+    return (
+      <Layout isAuthenticated={this.props.isAuthenticated}>
+        <div>Dashboard</div>
+      </Layout>);
+  }
 }
 
-Dashboard.propTypes = {
-  courses: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      Id: React.PropTypes.string.isRequired,
-      Name: React.PropTypes.string.isRequired,
-      Institute: React.PropTypes.string.isRequired,
-      Completed: React.PropTypes.bool.isRequired,
-      Score: React.PropTypes.string.isRequired,
-      GraduationDate: React.PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
-};
-
-Dashboard.defaultProps = {
-  courses: [],
-};
-
-export default securePage(Dashboard);
+export  default withRedux(initStore)(Dashboard);

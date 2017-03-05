@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import Link from 'next/link';
-import css from 'next/css';
+import { css } from 'glamor'
 
 const styles = {
   heading: css({

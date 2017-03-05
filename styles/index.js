@@ -3,11 +3,13 @@
  *
  * @author pkapako
  */
-import layout from './layout';
-import reset from './reset';
+import Reset from './reset';
+import Global from './global';
+import ContentWrapper from './contentWrapper';
 
 export {
-  reset,
-  layout,
+  Reset,
+  Global,
+  ContentWrapper,
 };
 

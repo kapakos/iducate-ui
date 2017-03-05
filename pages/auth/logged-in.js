@@ -4,30 +4,25 @@
  * @author pkapako
  */
 import React from 'react';
-import { setToken, checkSecret, extractInfoFromHash } from '../../utils/auth';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../../store';
+import { login } from '../../reducer/modules/auth';
+import Router from 'next/router';
 
-export default class extends React.Component {
-  static propTypes = {
-    url: React.PropTypes.shape({
-      pushTo: React.PropTypes.func.isRequired,
-    }),
-  };
+class LoggedIn extends React.Component {
+  static async getInitialProps() {
+    return {
+    };
+  }
 
-  static defaultProps = {
-    url: {},
-  };
-
-  componentDidMount() {
-    const { token, secret } = extractInfoFromHash();
-    const { url } = this.props;
-    if (!checkSecret(secret) || !token) {
-      console.error('Something went wrong with the sign in request');
-    }
-    setToken(token);
-    url.pushTo('/dashboard');
+  async componentDidMount() {
+    await this.props.dispatch(login());
+    Router.push('/dashboard');
   }
 
   render() {
     return null;
   }
 }
+
+export default withRedux(initStore)(LoggedIn);

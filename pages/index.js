@@ -4,8 +4,33 @@
  * @author pkapako
  */
 import React from 'react';
-import mainLayout from '../hocs/page';
+import withRedux from 'next-redux-wrapper';
+import R from 'ramda';
+import initStore from '../store';
+import Layout from '../components/Layout';
+import { checkAuthentication } from '../reducer/modules/auth';
 
-const index = () => (<div>{console.log('index')} <div>IDUCATE</div></div>);
+class Index extends React.Component {
+  static async getInitialProps(ctx) {
+    await ctx.store.dispatch(checkAuthentication(ctx.req));
+    const state = ctx.store.getState();
+    const loggedUser = state.auth.user;
+    return {
+      user: loggedUser,
+      isAuthenticated: !!loggedUser,
+    };
+  }
 
-export default mainLayout(index);
+  render() {
+    return (
+      <Layout isAuthenticated={this.props.isAuthenticated}>
+        <div>Iducate</div>
+      </Layout>
+    );
+  }
+}
+
+export default withRedux(initStore)(Index);
+
+
+
