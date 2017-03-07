@@ -6,7 +6,7 @@
   "author": "Petros Kapakos",
   "license": "MIT",
   "engines": {
-    "node": "7.7.x"
+    "node": "7.7.1"
   },
   "scripts": {
     "dev": "next",
