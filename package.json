@@ -12,7 +12,6 @@
     "dev": "next",
     "prestart": "next build",
     "start": "NODE_ENV=production node index.js",
-    "heroku-postbuild": "next build",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js './**/*Specs.js'",
     "test:watch": "npm run test -- --watch"
   },
