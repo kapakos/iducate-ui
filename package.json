@@ -12,7 +12,7 @@
     "dev": "next",
     "build": "next build",
     "prestart": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node index.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js './**/*Specs.js'",
     "test:watch": "npm run test -- --watch"
   },
