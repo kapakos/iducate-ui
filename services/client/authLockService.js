@@ -7,7 +7,7 @@ import uuid from 'uuid';
 import { setSecret } from '../authService';
 
 const getLock = (options) => {
-  const config = require('../../config.json');
+  const config = require('../../config/config.json');
   const Auth0Lock = require('auth0-lock').default;
   return new Promise((resolve, reject) => {
     try {
