@@ -8,14 +8,19 @@
   "engines": {
     "node": "7.7.1"
   },
+  "cacheDirectories": [
+    "nextjs/node_modules"
+  ],
   "scripts": {
     "dev": "next",
-    "prestart": "next build",
-    "start": "next start -p ${PORT}",
+    "build": "next build",
+    "start": "NODE_ENV=production node index.js",
+    "heroku-postbuild": "heroku-nextjs-build",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js './**/*Specs.js'",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
+    "@mars/heroku-nextjs-build": "^1.1.0",
     "auth0-lock": "10.9.0",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",

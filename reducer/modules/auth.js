@@ -3,8 +3,12 @@
  *
  * @author pkapako
  */
-import {checkAuth} from '../../services/authService';
-import { setToken, extractInfoFromHash, unsetToken } from '../../services/authService';
+import {
+  checkAuth,
+  setToken,
+  extractInfoFromHash,
+  unsetToken,
+} from '../../services/authService';
 
 const AUTH_CHECKING = '@@iducate/courses/AUTH_CHECKING';
 const AUTH_SUCCEED = '@@iducate/courses/AUTH_SUCCEED';
@@ -99,63 +103,91 @@ export default (state = initialState, action = {}) => {
     default:
       return state;
   }
-}
+};
 
 function authChecking() {
-  return {type: AUTH_CHECKING,}
+  return {
+    type: AUTH_CHECKING,
+  };
 }
 
 function authSucceed(user) {
-  return {type: AUTH_SUCCEED, payload: user}
+  return {
+    type: AUTH_SUCCEED,
+    payload: user,
+  };
 }
 
 function authFailed() {
-  return {type: AUTH_FAILED,}
+  return {
+    type: AUTH_FAILED,
+  };
 }
 
 function authError(error) {
-  return {type: AUTH_ERROR, error,}
+  return {
+    type: AUTH_ERROR,
+    error,
+  };
 }
 
 function loadToken() {
-  return {type: LOADING_TOKEN,};
+  return {
+    type: LOADING_TOKEN,
+  };
 }
 
 function tokenLoaded(token, user) {
-  return {type: LOADING_TOKEN_SUCCESS, payload: {token, user},};
+  return {
+    type: LOADING_TOKEN_SUCCESS,
+    payload: {
+      token,
+      user,
+    },
+  };
 }
 
 function loadTokenFailed(error) {
-  return {type: LOADING_TOKEN_FAILED, error,};
+  return {
+    type: LOADING_TOKEN_FAILED,
+    error,
+  };
 }
 
-function loggingOut(){
-  return { type: LOGGING_OUT,  };
+function loggingOut() {
+  return {
+    type: LOGGING_OUT,
+  };
 }
 
 function loggedOut() {
-  return { type: LOGGED_OUT, };
+  return {
+    type: LOGGED_OUT,
+  };
 }
 
-function logoutError(error){
-  return { type: LOGOUT_ERROR, error };
+function logoutError(error) {
+  return {
+    type: LOGOUT_ERROR,
+    error,
+  };
 }
 
 export function checkAuthentication(req) {
   return (dispatch) => {
-    dispatch(authChecking())
+    dispatch(authChecking());
     return checkAuth(req)
       .then((user) => {
         if (user) {
           dispatch(authSucceed(user));
         } else {
-          dispatch(authFailed())
+          dispatch(authFailed());
         }
       })
       .catch((error) => {
-        dispatch(authError(error))
+        dispatch(authError(error));
       });
-  }
+  };
 }
 
 export function login() {
@@ -163,30 +195,33 @@ export function login() {
     dispatch(loadToken());
     return extractInfoFromHash()
       .then(setToken)
-      .then(({token, user}) => {
-        if(token && user) {
+      .then(({
+        token,
+        user,
+      }) => {
+        if (token && user) {
           dispatch(tokenLoaded(token, user));
         } else {
           dispatch(loadTokenFailed('Token or User not available'));
         }
       })
-      .catch(error => {
-        dispatch(loadTokenFailed(error))
+      .catch((error) => {
+        dispatch(loadTokenFailed(error));
       });
-  }
+  };
 }
 
 export function logout() {
   return (dispatch) => {
     dispatch(loggingOut());
     return unsetToken()
-      .then(loggedOut => {
-        if(loggedOut){
-          dispatch(loggedOut())
+      .then((loggedout) => {
+        if (loggedout) {
+          dispatch(loggedOut());
         }
       })
       .catch((error) => {
-        dispatch(logoutError(error))
-      })
-  }
+        dispatch(logoutError(error));
+      });
+  };
 }
