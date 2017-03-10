@@ -20,11 +20,11 @@
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "@mars/heroku-nextjs-build": "^1.1.0",
+    "@mars/heroku-nextjs-build": "1.1.0",
     "auth0-lock": "10.9.0",
-    "babel-core": "^6.23.1",
+    "babel-core": "6.23.1",
     "babel-eslint": "^7.1.1",
-    "babel-preset-stage-0": "^6.22.0",
+    "babel-preset-stage-0": "6.22.0",
     "glamor": "2.20.24",
     "isomorphic-fetch": "2.2.1",
     "js-cookie": "2.1.3",
