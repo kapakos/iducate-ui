@@ -12,11 +12,12 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div>
-        <Header isAuthenticated={this.props.isAuthenticated}/>
+        <Header isAuthenticated={this.props.isAuthenticated} />
         <div {...contentWrapper}>
           {this.props.children}
         </div>
-        <Footer/>
-      </div>)
+        <Footer />
+      </div>
+    );
   }
-};
+}

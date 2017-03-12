@@ -4,11 +4,11 @@
  * @author pkapako
  */
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import R from 'ramda';
 import initStore from '../store';
-import {loadUdacityCourses} from '../reducer/modules/courses';
+import { loadUdacityCourses } from '../reducer/modules/courses';
 import Course from '../components/Course';
 import Layout from '../components/Layout';
 import securePageService from '../services/server/securePageService';
@@ -34,14 +34,14 @@ class Courses extends React.Component {
   render() {
     const { isAuthenticated, courses } = this.props;
     return (
-    <Layout isAuthenticated>
-      <div className="courses">
-        <span>Found {courses.loaded && courses.data.length || 0} Courses</span>
-        {courses.loaded && courses.data.map(course => (
-         <Course course={course} key={course.key}/>))}
-        {!courses.loaded && courses.loading_error && <div>{courses.loading_error}</div>}
-      </div>
-    </Layout>
+      <Layout isAuthenticated>
+        <div className="courses">
+          <span>Found {courses.loaded && courses.data.length || 0} Courses</span>
+          {courses.loaded && courses.data.map(course => (
+            <Course course={course} key={course.key} />))}
+          {!courses.loaded && courses.loading_error && <div>{courses.loading_error}</div>}
+        </div>
+      </Layout>
     );
   }
 }

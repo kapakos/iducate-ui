@@ -3,23 +3,30 @@
  *
  * @author pkapako
  */
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Link from 'next/link';
-import { css } from 'glamor'
-import { menu__item, menu__link, menu__item_index, menu__item_selected} from './styles';
+import { css } from 'glamor';
+import {
+  menu__item,
+  menu__link,
+  menu__item_index,
+  menu__item_selected,
+} from './styles';
 
 export default class Menu extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      link: PropTypes.string,
-      name: PropTypes.string,
-    })),
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        link: PropTypes.string,
+        name: PropTypes.string,
+      }),
+    ),
   };
 
   static defaultProps = {
     items: [],
-  };
+  }
 
   static indexLink(item, key) {
     return (
@@ -37,9 +44,8 @@ export default class Menu extends React.Component {
     );
   }
 
-
   renderLink(item, key) {
-    const {isAuthenticated} = this.props;
+    const { isAuthenticated } = this.props;
 
     if (item.link === '/') {
       return Menu.indexLink(item, key);
@@ -52,14 +58,14 @@ export default class Menu extends React.Component {
   }
 
   render() {
-    const {items} = this.props;
+    const { items } = this.props;
     return (
       <div>
         <ul className="menu">
-          { items.map((item, i) => this.renderLink(item, i)) }
+          {' '}{items.map((item, i) => this.renderLink(item, i))}{' '}
         </ul>
+        {' '}
       </div>
     );
   }
 }
-;
