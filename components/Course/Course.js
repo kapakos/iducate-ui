@@ -21,7 +21,8 @@ const Course = ({ course }) => (
     <div>Short Summary: {course.short_summary}</div>
     <div>Key: {course.key}</div>
   </div>
-); export const coursePropType = React.PropTypes.shape({
+);
+export const coursePropType = React.PropTypes.shape({
   title: React.PropTypes.string,
   subtitle: React.PropTypes.string,
   homepage: React.PropTypes.string,

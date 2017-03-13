@@ -3,7 +3,7 @@
  *
  * @author pkapako
  */
-import { getUdacityCourses } from '../../services/server/coursesService';
+import getUdacityCourses from '../../services/server/coursesService';
 
 const LOADING_COURSES = '@@iducate/courses/LOADING_COURSES';
 const LOADING_COURSES_SUCCESS = '@@iducate/courses/LOADING_COURSES_SUCCESS';
@@ -43,26 +43,35 @@ export default (state = initialState, action = {}) => {
 };
 
 function loadCourses() {
-  return { type: LOADING_COURSES };
+  return {
+    type: LOADING_COURSES,
+  };
 }
 
 function coursesLoaded(courses) {
-  return { type: LOADING_COURSES_SUCCESS, payload: courses };
+  return {
+    type: LOADING_COURSES_SUCCESS,
+    payload: courses,
+  };
 }
 
 function coursesFailed(error) {
-  return { type: LOADING_COURSES_FAILED, error };
+  return {
+    type: LOADING_COURSES_FAILED,
+    error,
+  };
 }
 
 export function loadUdacityCourses() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loadCourses());
     return getUdacityCourses()
-      .then((response) => {
+      .then(response => {
         dispatch(coursesLoaded(response));
       })
       .catch(error => {
-        dispatch(coursesFailed(error));
+        console.error(error);
+        dispatch(coursesFailed(error.message));
       });
   };
 }

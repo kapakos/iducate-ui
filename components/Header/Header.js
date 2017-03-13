@@ -35,7 +35,7 @@ const menuItems = [
 const Header = ({ isAuthenticated }) => (
   <div>
     <Head>
-      <title>My page title</title>
+      <title>Iducate</title>
       <meta charSet="utf-8" />
       <meta
         name="viewport"
@@ -58,7 +58,7 @@ const Header = ({ isAuthenticated }) => (
   </div>
 );
 
-Header.PropsTypes = {
+Header.PropTypes = {
   isAuthenticated: React.PropTypes.bool.isRequired,
 };
 
