@@ -30,10 +30,6 @@ class Courses extends React.Component {
 
   render() {
     const { isAuthenticated, courses } = this.props;
-
-    console.log('courses loaded');
-    console.log(courses.loaded);
-
     return (
       <Layout isAuthenticated>
         <div className="courses">

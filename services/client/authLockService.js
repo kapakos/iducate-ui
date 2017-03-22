@@ -6,15 +6,17 @@
 import uuid from 'uuid';
 import { setSecret } from '../authService';
 
-const getLock = options => {
-  const config = require('../../config/config');
+const getLock = (options) => {
+  const config = require('../../config');
   const Auth0Lock = require('auth0-lock').default;
+  console.log('config');
+  console.log(config);
   return new Promise((resolve, reject) => {
     try {
       const lock = new Auth0Lock(
-        config.AUTH0_CLIENT_ID,
-        config.AUTH0_CLIENT_DOMAIN,
-        options
+        config.AUTH.AUTH0_CLIENT_ID,
+        config.AUTH.AUTH0_CLIENT_DOMAIN,
+        options,
       );
       resolve(lock);
     } catch (error) {
@@ -27,7 +29,7 @@ const getBaseUrl = () => `${window.location.protocol}//${window.location.host}`;
 const getLogoutUrl = () =>
   `https://iducate.auth0.com/v2/logout?returnTo=${encodeURI(getBaseUrl())}`;
 
-const getOptions = container => {
+const getOptions = (container) => {
   const secret = uuid.v4();
   setSecret(secret);
   return {

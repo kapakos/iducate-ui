@@ -10,7 +10,8 @@
           ".jsx"
         ]
       }
-    ]
+    ],
+    "no-multi-assign": 0
   },
   "env": {
     "browser": true,
