@@ -11,7 +11,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const PORT = 7000;
+const PORT = process.env.PORT || 7000;
 
 app.prepare()
   .then(() => {
@@ -61,6 +61,6 @@ app.prepare()
     server.use(router.routes());
     server.listen(PORT, (err) => {
       if (err) throw err;
-      console.log(`> Ready on http://localhost:${PORT}`);
+      console.log(`> Ready on Port: ${PORT}`);
     })
   });
