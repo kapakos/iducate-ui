@@ -21,6 +21,7 @@ const getUdacityCourses = () => {
       }
       return res;
     })
+    .catch(console.error)
     .then(data =>
       R.uniq(
         data.map(({

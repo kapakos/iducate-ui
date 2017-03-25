@@ -30,13 +30,17 @@ class Courses extends React.Component {
 
   render() {
     const { isAuthenticated, courses } = this.props;
+    console.log("Are courses loaded");
+    console.log(courses.loaded);
+    console.log("Is data there");
+    console.log(courses.data);
     return (
       <Layout isAuthenticated>
         <div className="courses">
           <span>
             Found {(courses.loaded && courses.data.length) || 0} Courses
           </span>
-          {courses.loaded &&
+          {courses.loaded && courses.data &&
             courses.data.map(course => (
               <Course course={course} key={course.key} />
             ))}
