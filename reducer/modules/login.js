@@ -50,7 +50,7 @@ function loginPanelLoaded() {
   }
 }
 
-function oginPanelLoadingFailed() {
+function loginPanelLoadingFailed() {
   return {
     type: LOAD_LOGIN_FAILED,
   }
@@ -61,10 +61,11 @@ export function loadLogin(containerId) {
     dispatch(loadLoginPanel());
     return showLoginPanel(containerId)
       .then(() => {
+        console.log('this is the containerID', containerId)
         dispatch(loginPanelLoaded());
       })
       .catch(error => {
-        dispatch(oginPanelLoadingFailed());
+        dispatch(loginPanelLoadingFailed());
       })
   }
 }
